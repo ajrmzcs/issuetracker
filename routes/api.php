@@ -19,5 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('/create-token', TokenController::class)->name('create.token');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('issues', IssueController::class);
+    Route::apiResource('issues', IssueController::class)->only('index');
 });

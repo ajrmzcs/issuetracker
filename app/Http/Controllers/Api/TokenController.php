@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TokenRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class TokenController extends Controller
@@ -13,10 +13,10 @@ class TokenController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param TokenRequest $request
+     * @return JsonResponse
      */
-    public function __invoke(TokenRequest $request)
+    public function __invoke(TokenRequest $request): JsonResponse
     {
         if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
@@ -29,7 +29,7 @@ class TokenController extends Controller
         return response()->json([
             'token' => $token->plainTextToken,
             'token_type' => 'Bearer'
-        ], 200);
+        ]);
 
     }
 }
